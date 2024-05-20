@@ -1,0 +1,42 @@
+<!-- *ngFor permet de boucler sur un tableau (directive structurelle)-->
+<!-- *ngIf permet de faire un rendu conditionnel (directive structurelle) -->
+<!-- property binding entour un attribut pour acceuillir une variable dynamique -->
+<!-- ngClass ajoute une classe de facon dynamique (directive structurelle) Classe suivi de la condition -->
+<!-- ngStyle ajoute un style de facon dynamique (directive structurelle) Style suivi de la condition -->
+<!-- tow way binding communication bi-directionnelle  importer le formsModule dans app.module.ts-->
+<!-- ngModel permet de faire un binding entre un input et une variable (directive d'attribut) -->
+<!-- (click) permet de faire un binding entre un evenement et une fonction (directive d'attribut) -->
+ 
+<div class="mx-auto mt-5 col-md-4">
+  <h1 class="text-center text-muted">Mes taches</h1>
+  <cite class="text-muted">Vous avez {{nbTasks}} tache(s) en cours</cite>
+  <ul class="list-group">
+    <li class="list-group-item" *ngFor="let task of todo" [ngClass]="{'success':task.isDone,'danger':!task.isDone}">
+      <div class="d-flex justify-content-between">
+        {{task.title}}
+        <div>
+          <button [disabled]="task.isDone" class="btn btn-sm btn-success m-1"
+            (click)="OnChangeStatus(task)">Fait</button>
+          <button [disabled]="!task.isDone" class="btn btn-sm btn-danger" (click)="OnChangeStatus(task)">En
+            cours</button>
+        </div>
+      </div>
+      <div>
+        <div class="form-goup">
+          <div class="input-group">
+            <input type="text" class="form-control mb-2" [(ngModel)]="task.title" *ngIf="task.isEdit">
+            <div>
+              <button class="btn btn btn-primary" (click)="OnEditTask(task)">Modifier</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+  <div>
+    <input type="text" class="form-control mt-2" placeholder="votre tache" [(ngModel)]="newTask.title">
+    <div class="d-flex justify-content-end">
+      <button class="d-block btn btn-primary mt-2" (click)="OnAddTask()">Ajouter</button>
+    </div>
+  </div>
+</div>
