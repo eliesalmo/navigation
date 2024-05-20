@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+  <style>
+
+  .container {
+    display: flex; 
+    height: 100vh;
+  }
+
+  .titreExpediteur  {
+    border: 1px solid blue;
+    background-color: blue;
+    font-weight: bold;
+    font-size: large;
+    padding: 10px ;
+    text-align: center;
+    margin: 35px 35px 5px 35px;
+  }
+
+  .titreDestinateur  {
+    border: 1px solid green;
+    background-color: green;
+    font-weight: bold;
+    font-size: large;
+    padding: 10px ;
+    text-align: center;
+    margin: 35px 35px 5px 35px;
+  }
+
+  #Expediteur {
+    
+    border: 1px solid blue;
+    width: 300px;
+    height: 400px;
+    margin: 0px 35px 5px 35px;
+  }
+
+  #Destinateur {
+    
+    border: 1px solid green;
+    width: 300px;
+    height: 400px;
+    margin: 0px 35px 5px 35px;
+  }
+
+  input {
+    padding: 8px;
+    width: 200px;
+    margin-left: 35px;
+  }
+
+  button {
+    width: 75px;
+    height: 35px;
+  }
+
+  .chat-box {
+    color: blue;
+  }
+
+  .chat-box2 {
+    color: green;
+  }
+
+  .bt {
+    width: 25px;
+  }
+  
+
+  </style>
+
+    <div class="container">
+        
+        <div>
+          <div class = 'titreExpediteur'>Expediteur</div>
+          <div id="Expediteur"><div><p id="msgEx"></p></div>
+          </div>
+          <input type="text" id = "inputEx" placeholder="Tape your message.....">
+          <button onclick="sendMessage(Expediteur)">Send</button>
+        </div>
+
+        <div>
+          <div class = 'titreDestinateur'>Destinateur</div> 
+          <div id="Destinateur"><div><p id="msgDes"></p></div>
+          </div>
+          <input type="text" id="inputDes" placeholder="Tape your message.....">
+          <button onclick="sendMessage(Destinateur)">Send</button>
+        </div>     
+    </div>
+    
+
+    <script>
+
+        
+      let chats = [];
+
+      function sendMessage(sender) {
+          if (sender === Expediteur) {
+          var message = document.getElementById("inputEx").value;
+          }else if (sender === Destinateur) { var message = document.getElementById("inputDes").value;}
+          
+          const chat = {
+          message: message,
+          };
+          chats.push(chat);
+          console.log(chats);
+          displayChats(sender);
+          
+      }
+    
+
+
+      function deleteChat(index) {
+      chats.splice(index, 1);
+      displayChats();
+  }
+
+      function displayChats(sender) {
+
+        let chatList = document.getElementById("Expediteur");
+        chatList.innerHTML = "";
+        chats.forEach((chat, index) => {
+        const chatBox = document.createElement("div");
+        if (sender === Expediteur) {
+          chatBox.style.color = 'blue';
+           } else if (sender === Destinateur) {
+            chatBox.style.color = 'green';
+        } 
+        chatBox.innerHTML = `${chat.message} <button class = "bt" onclick="deleteChat(${index})">X</button>`;
+        chatList.appendChild(chatBox);
+        });
+       
+        let chatList2 = document.getElementById("Destinateur");
+        chatList2.innerHTML = "";
+        chats.forEach((chat, index) => {
+        const chatBox2 = document.createElement("div");
+        if (sender === Expediteur) {
+        chatBox2.style.color = 'green';
+        } else if (sender === Destinateur) {
+          chatBox2.style.color = 'blue';
+        }   
+        chatBox2.innerHTML = `${chat.message} <button class = "bt" onclick="deleteChat(${index})">X</button>`;
+        chatList2.appendChild(chatBox2);
+        });
+
+        document.getElementById("inputEx").value = "";
+        document.getElementById("inputDes").value = "";
+      }
+
+      
+        
+
+    </script>
+
+</body>
+</html>
